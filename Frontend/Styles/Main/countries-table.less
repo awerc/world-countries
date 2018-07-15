@@ -1,0 +1,16 @@
+.countries-table {
+  & > thead > tr > th.sorted {
+    &::after {
+      content: " ▼";
+      display: inline-block;
+    }
+
+    &.reverse::after {
+      content: " ▲";
+    }
+  }
+
+  & > tbody > tr > td {
+    vertical-align: middle;
+  }
+}

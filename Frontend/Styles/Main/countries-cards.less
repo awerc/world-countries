@@ -1,0 +1,28 @@
+.countries-cards {
+  display: flex;
+  flex-wrap: wrap;
+
+  .country-card {
+    display: inline-block;
+    width: 18%;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 3px 4px 10px 5px rgba(0, 0, 0, 0.2);
+
+    &:not(:nth-child(5n)) {
+      margin-right: 2.5%;
+    }
+
+    .flag {
+      width: 100%;
+    }
+
+    .name {
+      font-size: @third-title-font-size;
+      display: block;
+    }
+  }
+}
