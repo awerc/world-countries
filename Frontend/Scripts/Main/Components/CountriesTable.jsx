@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { Link } from 'Components/Router';
 
-const CountriesTable = ({ data, field, direction, onSort }) => {
+const CountriesTable = ({ data, field, direction, onSort, onDelete }) => {
   const thClassNames = fieldName => ClassNames(
     'col-md-2',
     {
@@ -28,6 +28,7 @@ const CountriesTable = ({ data, field, direction, onSort }) => {
           <th className={thClassNames('area')} onClick={() => onSort('area')}>
             Площадь, км<sup>2</sup>
           </th>
+          <th className="col-md-1" />
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,7 @@ const CountriesTable = ({ data, field, direction, onSort }) => {
             <td>{country.capital}</td>
             <td>{country.population.toLocaleString()}</td>
             <td>{country.area.toLocaleString()}</td>
+            <td><span className="glyphicon glyphicon-remove" onClick={() => onDelete(country.id)} /></td>
           </tr>
         ))}
       </tbody>
@@ -56,7 +58,8 @@ CountriesTable.propTypes = {
   direction: PropTypes.bool,
   field: PropTypes.string,
   data: PropTypes.array,
-  onSort: PropTypes.func
+  onSort: PropTypes.func,
+  onDelete: PropTypes.func
 };
 
 export default CountriesTable;

@@ -1,4 +1,9 @@
 .countries-table {
+  th,
+  td {
+    text-align: center;
+  }
+
   & > thead > tr > th.sorted {
     &::after {
       content: " ▼";
@@ -12,5 +17,10 @@
 
   & > tbody > tr > td {
     vertical-align: middle;
+  }
+
+  .glyphicon-remove {
+    color: #dc4041;
+    cursor: pointer;
   }
 }

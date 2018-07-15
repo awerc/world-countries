@@ -5,6 +5,7 @@ import { Link } from 'Components/Router/index';
 import { ScrollTop } from 'Components/index';
 
 import Modal from '../../Common/Containers/Modal';
+import ConfirmationModal from '../../Common/Containers/ConfirmationModal';
 import Form from '../Components/CountryCreationForm';
 
 import logo from '../../../Images/logo.png';
@@ -26,7 +27,7 @@ class Layout extends Component {
     const {
       children,
       modals: { toggleModal },
-      countryCreation: { status, createCountry }
+      countryCreation: { status: creatingStatus, createCountry },
     } = this.props;
 
     const toggleCreationModal = () => toggleModal('countryCreation');
@@ -41,12 +42,13 @@ class Layout extends Component {
         </div>
         <div className="layout-content">{children}</div>
         <ScrollTop />
-        <Modal status={status} title="Добавление страны" type="countryCreation">
+        <Modal status={creatingStatus} title="Добавление страны" type="countryCreation">
           <Form
             onSubmit={country => createCountry(country)}
             onCancel={toggleCreationModal}
           />
         </Modal>
+        <ConfirmationModal />
       </div>
     );
   }

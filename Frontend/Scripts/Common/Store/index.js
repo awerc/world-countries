@@ -5,7 +5,7 @@ const addLogger = stores => {
 
   storesNames.map(storeName => {
     onAction(stores[storeName], call => {
-      console.groupCollapsed(`Action ${call.name}`);
+      console.groupCollapsed(`Store ${storeName} Action ${call.name}`);
       console.log('prev state: ', stores[storeName].toJSON());
       console.log('action: ', call);
     });

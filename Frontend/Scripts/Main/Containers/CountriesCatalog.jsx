@@ -9,7 +9,7 @@ import CountriesList from '../Components/CountriesList';
 
 const DATA_COUNTS = [5, 10, 25];
 
-@inject('countriesList', 'modals')
+@inject('countriesList', 'modals', 'countryDeleting')
 @observer
 class CountriesCatalog extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class CountriesCatalog extends Component {
     this.onFilterChange = filter => paramsChange('filter', filter);
     this.onSearch = search => paramsChange('search', search);
     this.onSort = field => paramsChange('sort', field);
+    this.onSort = field => paramsChange('sort', field);
 
     this.componentDidMount = () => loadCountries();
   }
@@ -30,6 +31,7 @@ class CountriesCatalog extends Component {
     const { total, data, status, view, getCountries, changeView } = this.props.countriesList;
     const { offset, count, search, filter, sort: { field, direction } } = this.props.countriesList.params;
     const { toggleModal } = this.props.modals;
+    const { deleteCountry } = this.props.countryDeleting;
 
     return (
       <div className="countries-catalog">
@@ -55,6 +57,7 @@ class CountriesCatalog extends Component {
             direction={direction}
             onSort={this.onSort}
             onChangeView={changeView}
+            onDelete={deleteCountry}
           />
           <Pagination
             offset={offset}
@@ -72,6 +75,7 @@ class CountriesCatalog extends Component {
 }
 
 CountriesCatalog.wrappedComponent.propTypes = {
+  countryDeleting: PropTypes.object.isRequired,
   countriesList: PropTypes.object.isRequired,
   modals: PropTypes.object.isRequired,
 };

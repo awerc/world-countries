@@ -29,11 +29,18 @@ const CountriesList = types.model('countriesList', {
     },
     get total() {
       return filterCountries().length;
+    },
+    country(id) {
+      return _.find(self.data, { id });
     }
   };
 }).actions(self => ({
   addCountry(country) {
     self.data.push(country);
+  },
+
+  removeCountry(id) {
+    self.data = self.data.filter(country => country.id !== id);
   },
 
   loadCountries: flow(function* loadCountries() {

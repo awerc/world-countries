@@ -5,7 +5,7 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import CountriesTable from './CountriesTable';
 import CountryCard from './CountryCard';
 
-const CountriesList = ({ countries, field, direction, onSort, onChangeView, view }) => (
+const CountriesList = ({ countries, field, direction, onSort, onChangeView, onDelete, view }) => (
   <div className="countries-list">
     <ButtonGroup className="view-controls">
       <Button bsStyle="default" active={view === 'table'} onClick={() => onChangeView('table')}>
@@ -22,6 +22,7 @@ const CountriesList = ({ countries, field, direction, onSort, onChangeView, view
         field={field}
         direction={direction}
         onSort={onSort}
+        onDelete={onDelete}
       />
     ) : (
       <div className="countries-cards">
@@ -39,6 +40,7 @@ CountriesList.propTypes = {
   direction: PropTypes.bool,
   countries: PropTypes.array,
   onSort: PropTypes.func,
+  onDelete: PropTypes.func,
   onChangeView: PropTypes.func
 };
 

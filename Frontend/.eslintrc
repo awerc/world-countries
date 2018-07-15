@@ -27,6 +27,7 @@
         ["Services", "../Scripts/Common/Services"],
         ["Utils", "../Scripts/Common/Utils"],
         ["Constants", "../Scripts/Common/Constants"],
+        ["Containers", "../Scripts/Common/Containers"],
         ["Components", "../Scripts/Common/Components"],
         ["Decorators", "../Scripts/Common/Decorators"]
       ]
