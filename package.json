@@ -28,8 +28,5 @@
   "devDependencies": {
     "concurrently": "^3.5.0",
     "rimraf": "^2.6.2"
-  },
-  "engines": {
-    "node": "8.8.1"
   }
 }
