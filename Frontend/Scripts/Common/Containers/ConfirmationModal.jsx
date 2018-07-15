@@ -25,7 +25,7 @@ class ConfirmationModal extends Component {
           <Title>{title}</Title>
         </Header>
         <Body>
-          {message}
+          <div>{message}</div>
           <div className="controls">
             <Button bsStyle="link" onClick={this.toggleModal}>
               Отмена

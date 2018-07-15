@@ -6,12 +6,13 @@
 
   & > thead > tr > th.sorted {
     &::after {
-      content: " ▼";
+      content: " \e252";
+      font-family: "Glyphicons Halflings";
       display: inline-block;
     }
 
     &.reverse::after {
-      content: " ▲";
+      content: " \e253";
     }
   }
 
