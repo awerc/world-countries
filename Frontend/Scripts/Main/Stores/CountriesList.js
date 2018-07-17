@@ -2,11 +2,10 @@
 import _ from 'lodash';
 import { types, flow } from 'mobx-state-tree';
 import { STATUS_ERROR, STATUS_LOADING, STATUS_NO_RESULTS, STATUS_SUCCESS } from 'Constants/StatusConstants';
-import { getRequest } from 'Services/AjaxService';
+import AjaxService from 'Services/AjaxService';
 
 import { includes, comparer } from '../Utils/StoreUtils';
 import { Status, Params, View, Country } from '../Constants/StoreTypesConstants';
-import { countriesInitialState } from '../Constants/StoreConstants';
 
 const CountriesList = types.model('countriesList', {
   data: types.optional(types.array(Country), []),
@@ -19,7 +18,7 @@ const CountriesList = types.model('countriesList', {
     .filter(country => includes(country.continent, self.params.filter));
 
   return {
-    get getCountries() {
+    get countries() {
       const { offset, count, sort: { field, direction } } = self.params;
       const end = offset + count;
 
@@ -46,7 +45,7 @@ const CountriesList = types.model('countriesList', {
   loadCountries: flow(function* loadCountries() {
     self.status = STATUS_LOADING;
     try {
-      const response = yield getRequest('countries');
+      const response = yield AjaxService.get('countries');
 
       const data = _.get(response, 'data.data', []);
       self.data = data;
@@ -78,6 +77,13 @@ const CountriesList = types.model('countriesList', {
   }
 }));
 
-const CountriesListStore = CountriesList.create(countriesInitialState);
+const CountriesListStore = CountriesList.create({
+  data: [],
+  status: STATUS_LOADING,
+  params: {
+    sort: {}
+  },
+  view: 'table'
+});
 
 export default CountriesListStore;

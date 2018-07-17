@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { types } from 'mobx-state-tree';
-import { deleteRequest } from 'Services/AjaxService';
+import AjaxService from 'Services/AjaxService';
 
 import Modals from './Modals';
 import CountriesList from './CountriesList';
@@ -9,7 +9,7 @@ import ConfirmationModal from './ConfirmationModal';
 const CountryDeleting = types.model('countryDeleting', {
 }).actions(() => {
   const deleteCountry = id => {
-    deleteRequest(`country/${id}`)
+    AjaxService.delete(`country/${id}`)
       .then(() => {
         CountriesList.removeCountry(id);
         Modals.toggleModal('confirmationModal');

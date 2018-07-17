@@ -10,7 +10,7 @@
   "scripts": {
     "install-modules": "yarn install",
     "delete-modules": "rimraf ./node_modules",
-    "clear-cache": "cd .cache && rimraf ./*",
+    "clear-cache": "rimraf .cache/*",
     "start": "yarn clear-cache && parcel ./index.html",
     "build": "parcel build ./index.html --out-dir ../Dist --no-minify"
   },
@@ -44,7 +44,6 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-optimize": "^1.0.1",
     "eslint": "3.19.0",

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import CountriesTable from './CountriesTable';
 import CountryCard from './CountryCard';
@@ -8,11 +8,11 @@ import CountryCard from './CountryCard';
 const CountriesList = ({ countries, field, direction, onSort, onChangeView, onDelete, view }) => (
   <div className="countries-list">
     <ButtonGroup className="view-controls">
-      <Button bsStyle="default" active={view === 'table'} onClick={() => onChangeView('table')}>
-        <span className="glyphicon glyphicon-th-list" aria-hidden="true" />
+      <Button bsStyle="default" active={view === 'table'} onClick={onChangeView('table')}>
+        <Glyphicon glyph="th-list" />
       </Button>
-      <Button bsStyle="default" active={view === 'cards'} onClick={() => onChangeView('cards')}>
-        <span className="glyphicon glyphicon-th-large" aria-hidden="true" />
+      <Button bsStyle="default" active={view === 'cards'} onClick={onChangeView('cards')}>
+        <Glyphicon glyph="th-large" />
       </Button>
     </ButtonGroup>
 

@@ -1,36 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { inject, observer } from 'mobx-react/index';
 import { Link } from 'Components/Router/index';
-import { ScrollTop } from 'Components/index';
-
-import Modal from '../../Common/Containers/Modal';
-import ConfirmationModal from '../../Common/Containers/ConfirmationModal';
-import Form from '../Components/CountryCreationForm';
 
 import logo from '../../../Images/logo.png';
 
-@inject('modals', 'countryCreation')
-@observer
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-
-    this.componentDidUpdate = prevProps => {
-      if (this.props.location !== prevProps.location && prevProps.history.action === 'PUSH') {
-        window.scrollTo(0, 0);
-      }
-    };
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location && prevProps.history.action === 'PUSH') {
+      window.scrollTo(0, 0);
+    }
   }
 
   render() {
-    const {
-      children,
-      modals: { toggleModal },
-      countryCreation: { status: creatingStatus, createCountry },
-    } = this.props;
-
-    const toggleCreationModal = () => toggleModal('countryCreation');
+    const { children } = this.props;
 
     return (
       <div className="layout">
@@ -41,14 +23,6 @@ class Layout extends Component {
           </Link>
         </div>
         <div className="layout-content">{children}</div>
-        <ScrollTop />
-        <Modal status={creatingStatus} title="Добавление страны" type="countryCreation">
-          <Form
-            onSubmit={country => createCountry(country)}
-            onCancel={toggleCreationModal}
-          />
-        </Modal>
-        <ConfirmationModal />
       </div>
     );
   }
@@ -57,10 +31,6 @@ class Layout extends Component {
 Layout.propTypes = {
   location: PropTypes.object,
   children: PropTypes.node
-};
-Layout.wrappedComponent.propTypes = {
-  modals: PropTypes.object.isRequired,
-  countryCreation: PropTypes.object.isRequired
 };
 
 export default Layout;

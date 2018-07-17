@@ -3,19 +3,26 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Pagination, ContentStatus, SearchInput, SelectInput } from 'Components';
+import Modal from 'Containers/Modal';
 
-import { options } from '../Constants/StoreConstants';
+import { options } from '../Constants/ContinentsConstants';
 import CountriesList from '../Components/CountriesList';
+import Form from '../Components/CountryCreationForm';
 
 const DATA_COUNTS = [5, 10, 25];
 
-@inject('countriesList', 'modals', 'countryDeleting')
+@inject('countriesList', 'modals', 'countryDeleting', 'countryCreation')
 @observer
 class CountriesCatalog extends Component {
   constructor(props) {
     super(props);
 
-    const { loadCountries, paramsChange } = this.props.countriesList;
+    const { loadCountries, paramsChange, changeView } = props.countriesList;
+    const { deleteCountry } = this.props.countryDeleting;
+    const { createCountry } = this.props.countryCreation;
+    const { toggleModal } = this.props.modals;
+
+    this.componentDidMount = () => loadCountries();
 
     this.onPageChange = offset => paramsChange('offset', offset);
     this.onCountChange = count => paramsChange('count', count);
@@ -23,20 +30,21 @@ class CountriesCatalog extends Component {
     this.onSearch = search => paramsChange('search', search);
     this.onSort = field => paramsChange('sort', field);
     this.onSort = field => paramsChange('sort', field);
-
-    this.componentDidMount = () => loadCountries();
+    this.onChangeView = view => () => changeView(view);
+    this.onCreationModalToggle = () => toggleModal('countryCreation');
+    this.onCreateCountry = country => () => createCountry(country);
+    this.onDeleteCountry = id => () => deleteCountry(id);
   }
 
   render() {
-    const { total, data, status, view, getCountries, changeView } = this.props.countriesList;
+    const { total, data, status, view, countries } = this.props.countriesList;
     const { offset, count, search, filter, sort: { field, direction } } = this.props.countriesList.params;
-    const { toggleModal } = this.props.modals;
-    const { deleteCountry } = this.props.countryDeleting;
+    const { status: creatingStatus } = this.props.countryCreation;
 
     return (
       <div className="countries-catalog">
         <Row>
-          <Button className="cross" bsStyle="primary" onClick={() => toggleModal('countryCreation')} />
+          <Button className="cross" bsStyle="primary" onClick={this.onCreationModalToggle} />
           <Col sm={5}>
             <SearchInput value={search} onSearch={this.onSearch} />
           </Col>
@@ -51,13 +59,13 @@ class CountriesCatalog extends Component {
         </Row>
         <ContentStatus status={status}>
           <CountriesList
-            countries={getCountries}
+            countries={countries}
             view={view}
             field={field}
             direction={direction}
             onSort={this.onSort}
-            onChangeView={changeView}
-            onDelete={deleteCountry}
+            onChangeView={this.onChangeView}
+            onDelete={this.onDeleteCountry}
           />
           <Pagination
             offset={offset}
@@ -69,12 +77,19 @@ class CountriesCatalog extends Component {
             onCountChange={this.onCountChange}
           />
         </ContentStatus>
+        <Modal status={creatingStatus} title="Добавление страны" type="countryCreation">
+          <Form
+            onSubmit={this.onCreateCountry}
+            onCancel={this.onCreationModalToggle}
+          />
+        </Modal>
       </div>
     );
   }
 }
 
 CountriesCatalog.wrappedComponent.propTypes = {
+  countryCreation: PropTypes.object.isRequired,
   countryDeleting: PropTypes.object.isRequired,
   countriesList: PropTypes.object.isRequired,
   modals: PropTypes.object.isRequired,

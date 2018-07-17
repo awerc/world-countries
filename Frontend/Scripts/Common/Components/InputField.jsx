@@ -5,21 +5,22 @@ import { FormGroup, HelpBlock, FormControl, ControlLabel } from 'react-bootstrap
 import { composeValidators } from 'Utils/ValidationUtils';
 
 const FormControlAdapter = ({ input, meta, children, ...other }) => {
-  const copy = other;
-  if (copy.type === 'textarea' || copy.type === 'select') {
-    copy.componentClass = copy.type;
-    copy.type = undefined;
+  if (other.type === 'textarea' || other.type === 'select') {
+    other.componentClass = other.type;
+    other.type = undefined;
   }
+
   const error = meta.touched && meta.error ? 'error' : null;
+
   return (
     <FormGroup controlId={input.name} validationState={error}>
-      <ControlLabel>{copy.label}</ControlLabel>
-      <FormControl {...input} {...copy}>
+      <ControlLabel>{other.label}</ControlLabel>
+      <FormControl {...input} {...other}>
         {children}
       </FormControl>
       {error && <FormControl.Feedback />}
       {error && <HelpBlock>{meta.error}</HelpBlock>}
-      {copy.help && <HelpBlock>{copy.help}</HelpBlock>}
+      {other.help && <HelpBlock>{other.help}</HelpBlock>}
     </FormGroup>
   );
 };

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { types, flow } from 'mobx-state-tree';
 import { STATUS_ERROR, STATUS_LOADING, STATUS_SUCCESS, STATUS_DEFAULT } from 'Constants/StatusConstants';
-import { postRequest } from 'Services/AjaxService';
+import AjaxService from 'Services/AjaxService';
 
 import { Status } from '../Constants/StoreTypesConstants';
 
@@ -15,7 +15,7 @@ const CountryCreation = types.model('countryCreation', {
     self.status = STATUS_LOADING;
 
     try {
-      const response = yield postRequest('countries', country);
+      const response = yield AjaxService.post('countries', country);
 
       self.status = STATUS_SUCCESS;
       CountriesList.addCountry({ ...country, id: response.data.id });

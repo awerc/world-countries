@@ -1,11 +1,11 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { Table } from 'react-bootstrap';
+import { Table, Glyphicon } from 'react-bootstrap';
 import { Link } from 'Components/Router';
 
 const CountriesTable = ({ data, field, direction, onSort, onDelete }) => {
-  const thClassNames = fieldName => ClassNames(
+  const thClassNames = fieldName => classNames(
     'col-md-2',
     {
       sorted: field === fieldName,
@@ -32,21 +32,21 @@ const CountriesTable = ({ data, field, direction, onSort, onDelete }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map(country => (
-          <tr key={country.id}>
+        {data.map(({ id, flag, name, continent, capital, population, area }) => (
+          <tr key={id}>
             <td>
-              <Link to={`/Country/${country.id}`}>
-                <img src={country.flag} alt={`флаг ${country.name}`} />
+              <Link to={`/Country/${id}`}>
+                <img src={flag} alt={`флаг ${name}`} />
               </Link>
             </td>
             <td>
-              <Link to={`/Country/${country.id}`}>{country.name}</Link>
+              <Link to={`/Country/${id}`}>{name}</Link>
             </td>
-            <td>{country.continent}</td>
-            <td>{country.capital}</td>
-            <td>{country.population.toLocaleString()}</td>
-            <td>{country.area.toLocaleString()}</td>
-            <td><span className="glyphicon glyphicon-remove" onClick={() => onDelete(country.id)} /></td>
+            <td>{continent}</td>
+            <td>{capital}</td>
+            <td>{population.toLocaleString()}</td>
+            <td>{area.toLocaleString()}</td>
+            <td><Glyphicon glyph="remove" onClick={onDelete(id)} /></td>
           </tr>
         ))}
       </tbody>

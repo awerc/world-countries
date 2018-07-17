@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Field } from 'Components';
 import { required, positiveNumber, url } from 'Constants/ValidationConstants';
 
-import { continents } from '../Constants/StoreConstants';
+import { continents } from '../Constants/ContinentsConstants';
 
 const defaultFlag = 'https://vignette.wikia.nocookie.net/cybernations/images/d/d0/Placeholder_Flag.svg/revision/latest?cb=20100430021730';
 
