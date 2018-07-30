@@ -46,7 +46,7 @@ app.delete('/api/country/:id', (req, res) => {
 	const id = Number(req.params.id);
 	countries = countries.filter(country => country.id !== id);
 	// saveJSON(database, countries);
-	res.send(200);
+	res.sendStatus(200);
 });
 
 app.get('/api/country/:id', (req, res) => {
