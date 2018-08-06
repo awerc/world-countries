@@ -1,4 +1,4 @@
-const continents = [
+const Continents = [
   'Азия',
   'Европа',
   'Южная Америка',
@@ -7,7 +7,7 @@ const continents = [
   'Африка',
 ];
 
-const options = continents.map(continent => ({ value: continent, name: continent }));
-options.unshift({ value: '', name: 'Все' });
+const Options = Continents.map(continent => ({ value: continent, name: continent }));
+Options.unshift({ value: '', name: 'Все' });
 
-export { continents, options };
+export { Continents, Options };

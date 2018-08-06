@@ -5,8 +5,3 @@ export default {
   DEFAULT: 'STATUS_DEFAULT',
   NO_RESULTS: 'STATUS_NO_RESULTS',
 };
-// export const STATUS_SUCCESS = 'STATUS_SUCCESS';
-// export const STATUS_ERROR = 'STATUS_ERROR';
-// export const STATUS_LOADING = 'STATUS_LOADING';
-// export const STATUS_DEFAULT = 'STATUS_DEFAULT';
-// export const STATUS_NO_RESULTS = 'STATUS_NO_RESULTS';

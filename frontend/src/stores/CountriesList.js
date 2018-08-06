@@ -6,6 +6,7 @@ import Status from '../constants/StatusConstants';
 import AjaxService from '../services/AjaxService';
 import { includes, comparer } from '../utils/StoreUtils';
 import { StatusType, Params, Country } from '../constants/StoreTypesConstants';
+import { ViewTypes } from '../constants/CountriesListConstants';
 
 const CountriesList = types.model('countriesList', {
   data: types.optional(types.array(Country), []),
@@ -77,7 +78,7 @@ const CountriesListStore = CountriesList.create({
   params: {
     sort: {}
   },
-  view: 'table'
+  view: ViewTypes.table
 });
 
 export default CountriesListStore;

@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Table, Glyphicon } from 'react-bootstrap';
 
-import { Link } from '../Router';
+import { Link } from '../../components/Router/index';
 import './style.less';
 
 const CountriesTable = ({ data, field, direction, onSort, onDelete }) => {
-  const thClassNames = fieldName => classNames(
+  const sortableThClassNames = fieldName => classNames(
     'col-md-2',
     {
       sorted: field === fieldName,
@@ -20,15 +20,15 @@ const CountriesTable = ({ data, field, direction, onSort, onDelete }) => {
       <thead>
         <tr>
           <th className="col-md-1" />
-          <th className={thClassNames('name')} onClick={() => onSort('name')}>
+          <th className={sortableThClassNames('name')} onClick={() => onSort('name')}>
             Название
           </th>
           <th className="col-md-2">Континент</th>
           <th className="col-md-2">Столица</th>
-          <th className={thClassNames('population')} onClick={() => onSort('population')}>
+          <th className={sortableThClassNames('population')} onClick={() => onSort('population')}>
             Население, чел
           </th>
-          <th className={thClassNames('area')} onClick={() => onSort('area')}>
+          <th className={sortableThClassNames('area')} onClick={() => onSort('area')}>
             Площадь, км<sup>2</sup>
           </th>
           <th className="col-md-1" />

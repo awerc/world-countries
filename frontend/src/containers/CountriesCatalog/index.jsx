@@ -3,9 +3,17 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { Row, Col, Button } from 'react-bootstrap';
 
-import { Pagination, Loader, SearchInput, SelectInput, CountriesList, CountryCreationForm } from '../../components';
+import {
+  CountriesList,
+  SearchForm,
+  SelectInput,
+  Pagination,
+  ContentState,
+  CountryCreationForm,
+  OverlayState,
+} from '../../components';
 import Modal from '../Modal';
-import { options } from '../../constants/ContinentsConstants';
+import { Options } from '../../constants/ContinentsConstants';
 
 const DATA_COUNTS = [5, 10, 25];
 
@@ -14,14 +22,14 @@ const DATA_COUNTS = [5, 10, 25];
 class CountriesCatalog extends Component {
   componentDidMount = () => this.props.countriesList.loadCountries();
 
-  handleOnPageChange = offset => this.props.countriesList.paramsChange('offset', offset);
-  handleOnCountChange = count => this.props.countriesList.paramsChange('count', count);
-  handleOnFilterChange = filter => this.props.countriesList.paramsChange('filter', filter);
-  handleOnSearch = search => this.props.countriesList.paramsChange('search', search);
-  handleOnSort = field => this.props.countriesList.paramsChange('sort', field);
-  handleOnCreationModalToggle = () => this.props.modals.toggleModal('countryCreation');
-  handleOnCreateCountry = country => this.props.countryCreation.createCountry(country);
-  handleOnDeleteCountry = id => () => this.props.countryDeleting.deleteCountry(id);
+  handlePageChange = offset => this.props.countriesList.paramsChange('offset', offset);
+  handleCountChange = count => this.props.countriesList.paramsChange('count', count);
+  handleFilterChange = filter => this.props.countriesList.paramsChange('filter', filter);
+  handleSearch = search => this.props.countriesList.paramsChange('search', search);
+  handleSort = field => this.props.countriesList.paramsChange('sort', field);
+  handleCreationModalToggle = () => this.props.modals.toggleModal('countryCreation');
+  handleCountryCreate = country => this.props.countryCreation.createCountry(country);
+  handleCountryDelete = id => () => this.props.countryDeleting.deleteCountry(id);
 
   render() {
     const { total, data, status, countries } = this.props.countriesList;
@@ -31,26 +39,26 @@ class CountriesCatalog extends Component {
     return (
       <div className="countries-catalog">
         <Row>
-          <Button className="cross" bsStyle="primary" onClick={this.handleOnCreationModalToggle} />
+          <Button className="cross" bsStyle="primary" onClick={this.handleCreationModalToggle} />
           <Col sm={5}>
-            <SearchInput value={search} onSearch={this.handleOnSearch} />
+            <SearchForm value={search} onSearch={this.handleSearch} />
           </Col>
           <Col sm={3}>
             <SelectInput
               label="Континент"
-              options={options}
+              options={Options}
               active={filter}
-              onChange={this.handleOnFilterChange}
+              onChange={this.handleFilterChange}
             />
           </Col>
         </Row>
-        <Loader status={status}>
+        <ContentState status={status}>
           <CountriesList
             countries={countries}
             field={field}
             direction={direction}
-            onSort={this.handleOnSort}
-            onDelete={this.handleOnDeleteCountry}
+            onSort={this.handleSort}
+            onDelete={this.handleCountryDelete}
           />
           <Pagination
             offset={offset}
@@ -58,15 +66,17 @@ class CountriesCatalog extends Component {
             dataCount={data.length}
             count={count}
             counts={DATA_COUNTS}
-            onPageChange={this.handleOnPageChange}
-            onCountChange={this.handleOnCountChange}
+            onPageChange={this.handlePageChange}
+            onCountChange={this.handleCountChange}
           />
-        </Loader>
-        <Modal status={creatingStatus} title="Добавление страны" type="countryCreation">
-          <CountryCreationForm
-            onSubmit={this.handleOnCreateCountry}
-            onCancel={this.handleOnCreationModalToggle}
-          />
+        </ContentState>
+        <Modal title="Добавление страны" type="countryCreation">
+          <OverlayState status={creatingStatus}>
+            <CountryCreationForm
+              onSubmit={this.handleCountryCreate}
+              onCancel={this.handleCreationModalToggle}
+            />
+          </OverlayState>
         </Modal>
       </div>
     );

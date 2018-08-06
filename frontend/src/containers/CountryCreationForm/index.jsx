@@ -3,29 +3,27 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { Button } from 'react-bootstrap';
 
-import Field from '../InputField';
-import { required, positiveNumber, url } from '../../constants/ValidationConstants';
-import { continents } from '../../constants/ContinentsConstants';
+import { InputField as Field } from '../../components';
+import { Continents } from '../../constants/ContinentsConstants';
+import { required, positiveNumber, url } from '../../utils/ValidationRules';
 
-const defaultFlag = 'https://vignette.wikia.nocookie.net/cybernations/images/d/d0/Placeholder_Flag.svg/revision/latest?cb=20100430021730';
+const DefaultFlag = 'https://bit.ly/2LTVoMK';
 
 const CountryCreationForm = ({ onSubmit, onCancel }) => (
   <Form
     onSubmit={values => {
-      if (values.flag && url(values.flag)) {
-        values.flag = defaultFlag;
-      }
       const { area, population, ...others } = values;
       onSubmit({ area: Number(area), population: Number(population), ...others });
     }}
+    initialValues={{ flag: DefaultFlag }}
     render={({ handleSubmit, form }) => (
       <form onSubmit={handleSubmit}>
-        <Field name="flag" type="text" label="Флаг" placeholder="Ссылка на изображение..." validate={required} />
+        <Field name="flag" type="text" label="Флаг" placeholder="Ссылка на изображение..." validate={[required, url]} />
         <Field name="name" type="text" label="Название" placeholder="Название..." validate={required} />
         <Field name="capital" label="Столица" type="text" placeholder="Столица..." validate={required} />
         <Field name="continent" label="Континент" type="select" validate={required} >
           <option disabled hidden value="" />
-          {continents.map(continent => (
+          {Continents.map(continent => (
             <option value={continent} key={continent}>{continent}</option>
           ))}
         </Field>

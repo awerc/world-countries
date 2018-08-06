@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonGroup, Button, Glyphicon } from 'react-bootstrap';
 
+import { ViewTypes } from '../../constants/CountriesListConstants';
 import CountriesTable from '../CountriesTable';
 import CountryCard from '../CountryCard';
 import './style.less';
@@ -11,11 +12,11 @@ class CountriesList extends Component {
     super(props);
 
     this.state = {
-      view: 'table'
+      view: ViewTypes.table
     };
   }
 
-  handleOnChangeView = view => () => {
+  handleViewChange = view => () => {
     this.setState({ view });
   };
 
@@ -26,15 +27,23 @@ class CountriesList extends Component {
     return (
       <div className="countries-list">
         <ButtonGroup className="view-controls">
-          <Button bsStyle="default" active={view === 'table'} onClick={this.handleOnChangeView('table')}>
+          <Button
+            bsStyle="default"
+            active={view === ViewTypes.table}
+            onClick={this.handleViewChange(ViewTypes.table)}
+          >
             <Glyphicon glyph="th-list" />
           </Button>
-          <Button bsStyle="default" active={view === 'cards'} onClick={this.handleOnChangeView('cards')}>
+          <Button
+            bsStyle="default"
+            active={view === ViewTypes.cards}
+            onClick={this.handleViewChange(ViewTypes.cards)}
+          >
             <Glyphicon glyph="th-large" />
           </Button>
         </ButtonGroup>
 
-        {view === 'table' ? (
+        {view === ViewTypes.table && (
           <CountriesTable
             data={countries}
             field={field}
@@ -42,10 +51,11 @@ class CountriesList extends Component {
             onSort={onSort}
             onDelete={onDelete}
           />
-        ) : (
+        )}
+        {view === ViewTypes.cards && (
           <div className="countries-cards">
             {countries.map(country => (
-              <CountryCard {...country} key={country.id} />
+              <CountryCard coutry={country} key={country.id} />
             ))}
           </div>
         )}

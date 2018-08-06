@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react/index';
 import Container, { Header, Title, Body, Footer } from 'react-bootstrap/lib/Modal';
 
-import { OverlayLoader } from '../../components';
 import './style.less';
 
 @inject('modals')
@@ -18,19 +17,17 @@ class Modal extends Component {
   };
 
   render() {
-    const { modals: { active }, type, title, children, footer, status } = this.props;
+    const { modals: { active }, type, title, children, footer } = this.props;
 
     return (
       <Container show={type === active} onHide={this.toggleModal}>
-        <OverlayLoader status={status}>
-          <Header closeButton>
-            <Title>{title}</Title>
-          </Header>
-          <Body>
-            {children}
-          </Body>
-          {footer && <Footer>{footer}</Footer>}
-        </OverlayLoader>
+        <Header closeButton>
+          <Title>{title}</Title>
+        </Header>
+        <Body>
+          {children}
+        </Body>
+        {footer && <Footer>{footer}</Footer>}
       </Container>
     );
   }
@@ -39,7 +36,6 @@ class Modal extends Component {
 Modal.propTypes = {
   type: PropTypes.string,
   title: PropTypes.string,
-  status: PropTypes.string,
   children: PropTypes.node,
   footer: PropTypes.node
 };

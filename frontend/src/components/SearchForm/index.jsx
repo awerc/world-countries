@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, FormGroup, Button, Row, Col } from 'react-bootstrap';
 
-class SearchInput extends Component {
+class SearchForm extends Component {
   constructor(props) {
     super(props);
 
@@ -42,9 +42,9 @@ class SearchInput extends Component {
   }
 }
 
-SearchInput.propTypes = {
+SearchForm.propTypes = {
   value: PropTypes.string,
   onSearch: PropTypes.func
 };
 
-export default SearchInput;
+export default SearchForm;

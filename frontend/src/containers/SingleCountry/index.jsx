@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react/index';
 
 import { Link } from '../../components/Router';
-import { CountryInfo, Loader } from '../../components';
+import { CountryInfo, ContentState } from '../../components';
 import './style.less';
 
 @inject('singleCountry')
@@ -23,12 +23,12 @@ class SingleCountry extends Component {
     const { data, status } = this.props.singleCountry;
 
     return (
-      <Loader className="single-country" status={status}>
+      <ContentState className="single-country" status={status}>
         <CountryInfo {...data} />
         <Link to="/" className="back">
           <Button bsStyle="primary">Назад</Button>
         </Link>
-      </Loader>
+      </ContentState>
     );
   }
 }
